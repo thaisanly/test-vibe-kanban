@@ -1,42 +1,225 @@
 #root {
-  max-width: 1280px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em var(--link-color));
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.todo-app {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.todo-app h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.todo-input-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.card {
-  padding: 2em;
+.todo-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease;
 }
 
-.read-the-docs {
-  color: #888;
+.todo-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.add-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--accent-color);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.todos-container {
+  text-align: left;
+}
+
+.no-todos {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-item {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.todo-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.todo-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent-color);
+}
+
+.todo-text {
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-button,
+.delete-button,
+.save-button,
+.cancel-button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: var(--secondary-hover);
+}
+
+.delete-button {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: var(--danger-hover);
+}
+
+.save-button {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.save-button:hover {
+  background-color: var(--success-hover);
+}
+
+.cancel-button {
+  background-color: var(--text-secondary);
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: var(--text-primary);
+}
+
+.edit-container {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  align-items: center;
+}
+
+.edit-input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: var(--accent-hover);
+}
+
+/* Dark mode specific styles */
+:root {
+  --text-primary: #213547;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --border-color: #e5e7eb;
+  --accent-color: #3b82f6;
+  --accent-hover: #2563eb;
+  --secondary-color: #8b5cf6;
+  --secondary-hover: #7c3aed;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --success-color: #10b981;
+  --success-hover: #059669;
+}
+
+[data-theme="dark"] {
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --card-bg: #1f2937;
+  --input-bg: #374151;
+  --border-color: #374151;
+  --accent-color: #3b82f6;
+  --accent-hover: #60a5fa;
+  --secondary-color: #8b5cf6;
+  --secondary-hover: #a78bfa;
+  --danger-color: #ef4444;
+  --danger-hover: #f87171;
+  --success-color: #10b981;
+  --success-hover: #34d399;
 }
