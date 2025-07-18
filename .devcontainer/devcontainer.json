@@ -28,7 +28,8 @@
       }
     }
   },
-  "forwardPorts": [5173, 40631],
-  "postCreateCommand": "npm install",
+  "forwardPorts": [5173, 5174, 5175, 5176, 5177, 5178, 5179, 5180, 40631],
+  "postCreateCommand": "yarn install",
+  "postStartCommand": "npx -y vibe-kanban",
   "remoteUser": "node"
 }
