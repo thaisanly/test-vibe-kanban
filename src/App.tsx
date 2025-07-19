@@ -1,42 +1,55 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { ThemeToggle } from './components/ThemeToggle'
+import { UserAuth } from './components/UserAuth'
+import { useUser } from './hooks/useUser'
 
 interface Todo {
   id: string
   text: string
   completed: boolean
   createdAt: Date
+  userId: string
 }
 
 function App() {
+  const { currentUser, isLoggedIn } = useUser()
   const [todos, setTodos] = useState<Todo[]>([])
   const [inputValue, setInputValue] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editingText, setEditingText] = useState('')
 
   useEffect(() => {
-    const savedTodos = localStorage.getItem('todos')
-    if (savedTodos) {
-      const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
-        ...todo,
-        createdAt: new Date(todo.createdAt)
-      }))
-      setTodos(parsedTodos)
+    if (isLoggedIn && currentUser) {
+      const savedTodos = localStorage.getItem(`todos_${currentUser.id}`)
+      if (savedTodos) {
+        const parsedTodos = JSON.parse(savedTodos).map((todo: any) => ({
+          ...todo,
+          createdAt: new Date(todo.createdAt)
+        }))
+        setTodos(parsedTodos)
+      } else {
+        setTodos([])
+      }
+    } else {
+      setTodos([])
     }
-  }, [])
+  }, [isLoggedIn, currentUser])
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos))
-  }, [todos])
+    if (isLoggedIn && currentUser) {
+      localStorage.setItem(`todos_${currentUser.id}`, JSON.stringify(todos))
+    }
+  }, [todos, isLoggedIn, currentUser])
 
   const addTodo = () => {
-    if (inputValue.trim()) {
+    if (inputValue.trim() && isLoggedIn && currentUser) {
       const newTodo: Todo = {
         id: Date.now().toString(),
         text: inputValue.trim(),
         completed: false,
-        createdAt: new Date()
+        createdAt: new Date(),
+        userId: currentUser.id
       }
       setTodos([newTodo, ...todos])
       setInputValue('')
@@ -77,8 +90,11 @@ function App() {
     <div className="todo-app">
       <ThemeToggle />
       <h1>Todo List</h1>
+      <UserAuth />
       
-      <div className="todo-input-container">
+      {isLoggedIn ? (
+        <>
+          <div className="todo-input-container">
         <input
           type="text"
           className="todo-input"
@@ -141,6 +157,10 @@ function App() {
           </ul>
         )}
       </div>
+        </>
+      ) : (
+        <p className="login-message">Please login or sign up to manage your todos.</p>
+      )}
     </div>
   )
 }
