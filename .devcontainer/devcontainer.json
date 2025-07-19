@@ -1,6 +1,11 @@
 {
   "name": "Vibe Kanban",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "TZ": "${localEnv:TZ:Asia/Singapore}"
+    }
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "installZsh": true,
@@ -8,6 +13,10 @@
     },
     "ghcr.io/devcontainers/features/git:1": {}
   },
+  "mounts": [
+    "source=claude-code-bashhistory,target=/commandhistory,type=volume",
+    "source=claude-devcontainer,target=/home/claude,type=volume"
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -28,7 +37,6 @@
       }
     }
   },
-  "forwardPorts": [5173, 5174, 5175, 5176, 5177, 5178, 5179, 5180, 40631],
-  "postCreateCommand": "yarn install",
-  "remoteUser": "node"
+  "forwardPorts": [8000, 8001],
+  "remoteUser": "claude"
 }

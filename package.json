@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "vibe": "export HOST=0.0.0.0; export GITHUB_CLIENT_ID=Ov23li2ho9y2NypR8Pi9; export FRONTEND_PORT=40631; export BACKEND_PORT=40632 && npx vibe-kanban"
   },
   "dependencies": {
     "react": "^19.1.0",
